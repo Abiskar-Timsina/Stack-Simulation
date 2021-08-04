@@ -38,3 +38,9 @@ _Windows & Linux_
 ```console
 $ deactivate
 ```
+
+#### Installing the required packages
+Required modules are listed in the requirements.txt file. To install,
+```console
+$ pip install -r ./requirements.txt
+```
