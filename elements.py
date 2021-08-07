@@ -4,7 +4,7 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
-from constants import verticies_stack,edges_stack,input_box,input_lines
+from constants import verticies_stack,edges_stack,input_box,input_lines,pop_box,pop_lines
 
 class Render:
 	def __init__(self):
@@ -13,7 +13,7 @@ class Render:
 
 
 	# Function to generate the basic frame of the Stack.
-	def stack_box(self,input_list):
+	def stack_box(self,input_list,R=0,G=1,B=0):
 		glBegin(GL_LINES)
 		for edge in edges_stack:
 			for vertex in edge:
@@ -26,12 +26,13 @@ class Render:
 				glVertex2fv(input_box[vertex])
 		glEnd()
 
-		# glBegin(GL_QUADS)
-		# for edge in input_lines:
-		# 	# glColor2fv(1,0,0)
-		# 	for vertex in edge:
-		# 		glVertex2fv(input_box[vertex])
-		# glEnd()
+		glColor3f(R,G,B)
+		glBegin(GL_QUADS)
+		for edge in pop_lines:
+			for vertex in edge:
+				glVertex2fv(pop_box[vertex])
+		glEnd()
+		glColor3f(1,1,1)
 
 		''' If items have been pushed onto the stack, render them without animating them.'''
 		if self.pushed_items:
@@ -42,7 +43,10 @@ class Render:
 			self.display_text(100+(index*15),475,characters)
 			print(f"From the stack {characters} -> {input_list}")
 
-		# self.display_text(320, 429, text= "POP")
+		# Text
+		self.display_text(95, 355, text= "POP")
+		self.display_text(35, 520, text= "PUSH TO STACK:")
+		self.display_text(75, 255, text= "Console:")
 
 
 	# Function to generate individual block for each item on the stack.
@@ -104,7 +108,7 @@ class Render:
 			value, coordinates = self.pushed_items.pop()
 
 			for i in range(600-coordinates):
-				render_obj.stack_box(inp_list)
+				render_obj.stack_box(inp_list,R=1,G=0)
 				y_posn = coordinates + i 
 				render_obj.display_text(385, y_posn, str(value).zfill(2))
 				pygame.display.flip()
