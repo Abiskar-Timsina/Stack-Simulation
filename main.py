@@ -88,6 +88,7 @@ def main():
 					render_obj.stack_box(inp_list)
 					pygame.display.flip()
 
+
 			if event.type == pygame.MOUSEBUTTONDOWN:
 				render_obj.pop_operation(render_obj,inp_list)
 
