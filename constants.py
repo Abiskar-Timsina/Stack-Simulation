@@ -37,3 +37,35 @@ edges_element = (
 	(0,2),
 	(1,3),
 )
+
+
+input_box = (
+	(-7,8.5), # Rect 0
+	(-7,9.5), # 1 
+ 	(-3,9.5), # 2
+	(-3,8.5), # 3
+	# input box
+	(-2,50),  #vertical line 1
+	(-2,-50), #vertical line 2
+	(-2,5),	 #horizontal line 1
+	(-50,5), #hortizontal line 2
+	# POP box
+	(-6.5,6), # Rect 0
+	(-6.5,7), # 1 
+ 	(-4,7), # 2
+	(-4,6), # 3
+	)
+
+input_lines = (
+	(0,1),
+	(0,3),
+	(1,2),
+	(2,3),
+	(4,5), #vertical line
+	(6,7), # Horizontal line
+	#pop box
+	(8,9),
+	(8,11),
+	(9,10),
+	(10,11),
+	)

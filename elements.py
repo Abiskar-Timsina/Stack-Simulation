@@ -4,7 +4,7 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
-from constants import verticies_stack,edges_stack
+from constants import verticies_stack,edges_stack,input_box,input_lines
 
 class Render:
 	def __init__(self):
@@ -13,17 +13,36 @@ class Render:
 
 
 	# Function to generate the basic frame of the Stack.
-	def stack_box(self):
+	def stack_box(self,input_list):
 		glBegin(GL_LINES)
 		for edge in edges_stack:
 			for vertex in edge:
 				glVertex3fv(verticies_stack[vertex])
 		glEnd()
 
+		glBegin(GL_LINES)
+		for edge in input_lines:
+			for vertex in edge:
+				glVertex2fv(input_box[vertex])
+		glEnd()
+
+		# glBegin(GL_QUADS)
+		# for edge in input_lines:
+		# 	# glColor2fv(1,0,0)
+		# 	for vertex in edge:
+		# 		glVertex2fv(input_box[vertex])
+		# glEnd()
+
 		''' If items have been pushed onto the stack, render them without animating them.'''
 		if self.pushed_items:
 			for value,coordinates in self.pushed_items:
 				self.display_text(385,coordinates,str(value).zfill(2))
+
+		for index,characters in enumerate(input_list):
+			self.display_text(100+(index*15),475,characters)
+			print(f"From the stack {characters} -> {input_list}")
+
+		# self.display_text(320, 429, text= "POP")
 
 
 	# Function to generate individual block for each item on the stack.
@@ -45,7 +64,7 @@ class Render:
 
 
 	# Function to add items to the item stack and animate them.
-	def push_operation(self,render_obj,value):
+	def push_operation(self,render_obj,value,input_list):
 		'''Basic Pixel Animation (Top Down)
 			# x- 385, y- 60 the position for the text to be centered 
 
@@ -64,7 +83,7 @@ class Render:
 
 		'''
 		for i in range(540-(60*self.index)): 
-			render_obj.stack_box()
+			render_obj.stack_box(input_list)
 			y_posn = 600 - i 
 			render_obj.display_text(385, y_posn, str(value).zfill(2))
 			pygame.display.flip()
@@ -80,12 +99,12 @@ class Render:
 		self.index += 1 # keeps track of items on the screen
 		self.pushed_items.append((value,y_posn)) #keeps track of items on the screen and their coordinates.
 
-	def pop_operation(self,render_obj):
+	def pop_operation(self,render_obj,inp_list):
 		if self.pushed_items:
 			value, coordinates = self.pushed_items.pop()
 
 			for i in range(600-coordinates):
-				render_obj.stack_box()
+				render_obj.stack_box(inp_list)
 				y_posn = coordinates + i 
 				render_obj.display_text(385, y_posn, str(value).zfill(2))
 				pygame.display.flip()
