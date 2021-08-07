@@ -38,6 +38,15 @@ edges_element = (
 	(1,3),
 )
 
+surfaces = (
+	(0,2,4,5),
+	(1,3,6,7),
+	(0,1,6,4),
+	(2,0,3,1),
+	(2,3,7,5),
+	(4,5,6,7),
+	)
+
 
 input_box = (
 	(-7,8.5), # Rect 0
@@ -45,10 +54,6 @@ input_box = (
  	(-3,9.5), # 2
 	(-3,8.5), # 3
 	# input box
-	(-2,50),  #vertical line 1
-	(-2,-50), #vertical line 2
-	(-2,5),	 #horizontal line 1
-	(-50,5), #hortizontal line 2
 	)
 
 input_lines = (
@@ -56,9 +61,19 @@ input_lines = (
 	(0,3),
 	(1,2),
 	(2,3),
-	(4,5), #vertical line
-	(6,7), # Horizontal line
 	)
+
+divider = (
+	(-2,50),  #vertical line 1
+	(-2,-50), #vertical line 2
+	(-2,5),	 #horizontal line 1
+	(-50,5), #hortizontal line 2
+	)
+
+divider_lines = (
+	(0,1), #vertical line
+	(2,3), # Horizontal line
+	) 
 
 pop_box = (
 	# POP box

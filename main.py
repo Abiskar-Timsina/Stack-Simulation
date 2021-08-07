@@ -15,8 +15,12 @@ def main():
 	clock = pygame.time.Clock()
 	pygame.display.set_caption('Stack Simulation')
 	display = (800,600)
-	window = pygame.display.set_mode(display,DOUBLEBUF|OPENGL) #clearing the default buffer
-	
+	window = pygame.display.set_mode(display,DOUBLEBUF|OPENGL) #clearing the default GL_COLOR_BUFFER_BIT
+
+	# glClearColor(102/256,78/256,76/256,1)
+	# glClearColor(102/256,133/256,134/256,1)
+	glClearColor(12/256,10/256,62/256,1)
+
 	glEnable(GL_BLEND)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 	
