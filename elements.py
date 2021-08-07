@@ -10,6 +10,8 @@ class Render:
 	def __init__(self):
 		self.index = 0  # keeps track of items on the screen
 		self.pushed_items = list() #keeps track of items on the screen and their coordinates.
+		self.time = 0
+		self.pop_limit = True
 
 
 	# Function to generate the basic frame of the Stack.
@@ -41,7 +43,6 @@ class Render:
 
 		for index,characters in enumerate(input_list):
 			self.display_text(100+(index*15),475,characters)
-			print(f"From the stack {characters} -> {input_list}")
 
 		# Text
 		self.display_text(95, 355, text= "POP")
@@ -86,13 +87,22 @@ class Render:
 			we start at 540 because the index is 0 initially.
 
 		'''
-		for i in range(540-(60*self.index)): 
-			render_obj.stack_box(input_list)
-			y_posn = 600 - i 
-			render_obj.display_text(385, y_posn, str(value).zfill(2))
+		if len(self.pushed_items) > 1:
+			print("Stack is Full") # Some sort of better Error handling.
+			render_obj.stack_box(input_list,R=1,G=0)
+			self.display_text(0, 155, "> Stack is Full")
 			pygame.display.flip()
-			pygame.time.wait(1)
-			glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+			pygame.time.wait(1000)
+			return None
+
+		if self.pop_limit:
+			for i in range(540-(60*self.index)): 
+				render_obj.stack_box(input_list)
+				y_posn = 600 - i 
+				render_obj.display_text(385, y_posn, str(value).zfill(2))
+				pygame.display.flip()
+				pygame.time.wait(self.time)
+				glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
 
 			''' Maybe required | Change later '''
 				# pygame.display.flip()
@@ -100,8 +110,13 @@ class Render:
 
 			'''end of animation'''
 
-		self.index += 1 # keeps track of items on the screen
-		self.pushed_items.append((value,y_posn)) #keeps track of items on the screen and their coordinates.
+			self.index += 1 # keeps track of items on the screen
+			self.pushed_items.append((value,y_posn)) #keeps track of items on the screen and their coordinates.
+		else:
+			print("Stack is Full") # Some sort of better Error handling.
+			render_obj.stack_box(input_list,R=1,G=0)
+			self.display_text(0, 155, "> Stack is Full")
+			pygame.display.flip()
 
 	def pop_operation(self,render_obj,inp_list):
 		if self.pushed_items:
@@ -112,9 +127,12 @@ class Render:
 				y_posn = coordinates + i 
 				render_obj.display_text(385, y_posn, str(value).zfill(2))
 				pygame.display.flip()
-				pygame.time.wait(1)
+				pygame.time.wait(self.time)
 				glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
 			
 			self.index -= 1 # since we removed one item from the stack.
 		else:
 			print("Stack is empty") # Some sort of better Error handling.
+			render_obj.stack_box(inp_list,R=1,G=0)
+			self.display_text(0, 155, "> Stack is Empty")
+			pygame.display.flip()

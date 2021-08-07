@@ -87,10 +87,6 @@ def main():
 			if event.type == pygame.MOUSEBUTTONDOWN:
 				render_obj.pop_operation(render_obj,inp_list)
 
-			
-
-
-
 	
 	pygame.quit()
 
