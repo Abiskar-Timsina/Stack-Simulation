@@ -83,10 +83,13 @@ def main():
 			
 				else:
 					# print(chr(event.key))
-					inp_str += chr(event.key)
-					inp_list.append(chr(event.key))
-					render_obj.stack_box(inp_list)
-					pygame.display.flip()
+					try:
+						inp_str += chr(event.key)
+						inp_list.append(chr(event.key))
+						render_obj.stack_box(inp_list)
+						pygame.display.flip()
+					except:
+						print("None Numeric value")
 
 			if event.type == pygame.MOUSEBUTTONDOWN:
 				render_obj.pop_operation(render_obj,inp_list)
