@@ -3,16 +3,19 @@ from pygame.locals import *
 
 from OpenGL.GL import *
 from OpenGL.GLU import *
+import ctypes
 
 from elements import Render
 
 
+title = "Stack Simulation"
+ctypes.windll.kernel32.SetConsoleTitleW(title)
 def main():
 	print(f"[INFO] Program Execution Started")
 	render_obj = Render()
 	pygame.init()
 	clock = pygame.time.Clock()
-	pygame.display.set_caption('Stack Simulation')
+	pygame.display.set_caption(title)
 	display = (800,600)
 	window = pygame.display.set_mode(display,DOUBLEBUF|OPENGL) #clearing the default GL_COLOR_BUFFER_BIT
 
@@ -88,7 +91,6 @@ def main():
 						glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
 						
 				else:
-					# print(chr(event.key))
 					try:
 						if (chr(event.key).isnumeric()):
 							inp_str += chr(event.key)
@@ -97,6 +99,7 @@ def main():
 							pygame.display.flip()
 						else:
 							print("[ERROR] None Numeric value")
+
 					except:
 						print("[ERROR] None Numeric value")
 

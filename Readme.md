@@ -45,9 +45,4 @@ Required modules are listed in the requirements.txt file. To install,
 $ pip install -r ./requirements.txt
 ```
 
-#### TODO:
-- Better error handling
-	- Error: Pop operation is used if the stack is empty.
-	- Error: Stack Overflow
-- Input for the size of stack.
-- Exit Button.
+# Version 0.1 has been released.
