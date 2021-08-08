@@ -4,7 +4,7 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
-from constants import verticies_stack,edges_stack,input_box,input_lines,pop_box,pop_lines,divider,divider_lines,surfaces
+from constants import verticies_stack,edges_stack,input_box,input_lines,pop_box,pop_lines,divider,divider_lines,surfaces,lines
 
 class Render:
 	def __init__(self):
@@ -24,8 +24,8 @@ class Render:
 		glEnd()
 		glColor3f(1,1,1)
 
-		#glColor3f(0/256,0/256,0/256)
-		glColor3f(255/256,186/256,8/256)
+		glColor3f(256/256,256/256,256/256)
+		#glColor3f(255/256,186/256,8/256)
 		glLineWidth(1)
 		glBegin(GL_LINES)
 		for edge in edges_stack:
@@ -63,9 +63,28 @@ class Render:
 		if self.pushed_items:
 			for value,coordinates in self.pushed_items:
 				self.display_text(385,coordinates,R=255,G=255,B=0,text=str(value).zfill(2))
+			
+			i=10/8
+			for n in range(self.index):
+				lines_edges = (
+						(0,0+i*(n+1),0), # 0
+						(1,0+i*(n+1),0), # 2
+						#(0,0+i*(n+1),-1), #5
+						(-1,+i*(n+1),-1), #4 
+						)
+				glColor3f(256/256,256/256,256/256)
+				#glColor3f(255/256,186/256,8/256)
+				glLineWidth(1)
+				glBegin(GL_LINES)
+				for edge in lines:
+					for vertex in edge:
+						glVertex3fv(lines_edges[vertex])
+				glEnd()
+				glColor3f(1,1,1)
 
 		for index,characters in enumerate(input_list):
 			self.display_text(100+(index*15),475,characters)
+
 
 		# Text
 		self.display_text(95, 355, text= "POP")
@@ -110,7 +129,7 @@ class Render:
 			we start at 540 because the index is 0 initially.
 
 		'''
-		if len(self.pushed_items) > 1:
+		if len(self.pushed_items) > 3:
 			print("Stack is Full") # Some sort of better Error handling.
 			render_obj.stack_box(input_list,R=1,G=0)
 			self.display_text(0, 155,R=249,G=86,B=79,text="> Stack is Full")

@@ -91,6 +91,7 @@ def main():
 					except:
 						print("None Numeric value")
 
+
 			if event.type == pygame.MOUSEBUTTONDOWN:
 				render_obj.pop_operation(render_obj,inp_list)
 
