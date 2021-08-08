@@ -7,10 +7,9 @@ from OpenGL.GLU import *
 from elements import Render
 
 
-
 def main():
+	print(f"[INFO] Program Execution Started")
 	render_obj = Render()
-
 	pygame.init()
 	clock = pygame.time.Clock()
 	pygame.display.set_caption('Stack Simulation')
@@ -28,8 +27,7 @@ def main():
 	glTranslatef(-0.5,-5,-15) # The stack is translated to a proper position 
 
 	run = True
-	value = 1
-
+	value = " "
 	inp_str = " "
 	inp_list = []
 	while run:
@@ -64,32 +62,43 @@ def main():
 				# 	pygame.display.flip() #update the screen .update has a bug! Use .flip instead
 
 				elif event.key == pygame.K_RETURN:
-					value = int(inp_str)
+					try:
+						value = int(inp_str)
+						print(f"[INFO] {value} pushed by the user")
+						render_obj.stack_box(inp_list)
+						inp_str = str()
+						inp_list = []
 
-					render_obj.stack_box(inp_list)
-					inp_str = str()
-					inp_list = []
-
-					# pushing items onto the stack
-					glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
-					render_obj.stack_box(inp_list)
-					render_obj.push_operation(render_obj,value,inp_list)
-					pygame.display.flip()
-					
-					#redrawing the stack and adding items onto it.
-					glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
-					render_obj.stack_box(inp_list)
-					pygame.display.flip() #update the screen .update has a bug! Use .flip instead
-			
+						# pushing items onto the stack
+						glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+						render_obj.stack_box(inp_list)
+						render_obj.push_operation(render_obj,value,inp_list)
+						pygame.display.flip()
+						
+						#redrawing the stack and adding items onto it.
+						glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+						render_obj.stack_box(inp_list)
+						pygame.display.flip() #update the screen .update has a bug! Use .flip instead
+					except:
+						print(f"[ERROR] Input Field Cannot Be Null")
+						pygame.display.flip()
+						render_obj.display_text(0, 155,R=249,G=86,B=79,text="> Input Field is Null")
+						pygame.display.flip()
+						pygame.time.wait(1000)
+						glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+						
 				else:
 					# print(chr(event.key))
 					try:
-						inp_str += chr(event.key)
-						inp_list.append(chr(event.key))
-						render_obj.stack_box(inp_list)
-						pygame.display.flip()
+						if (chr(event.key).isnumeric()):
+							inp_str += chr(event.key)
+							inp_list.append(chr(event.key))
+							render_obj.stack_box(inp_list)
+							pygame.display.flip()
+						else:
+							print("[ERROR] None Numeric value")
 					except:
-						print("None Numeric value")
+						print("[ERROR] None Numeric value")
 
 
 			if event.type == pygame.MOUSEBUTTONDOWN:

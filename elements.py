@@ -129,8 +129,8 @@ class Render:
 			we start at 540 because the index is 0 initially.
 
 		'''
-		if len(self.pushed_items) > 3:
-			print("Stack is Full") # Some sort of better Error handling.
+		if len(self.pushed_items) > 7:
+			print("[INFO] Stack is Full") 
 			render_obj.stack_box(input_list,R=1,G=0)
 			self.display_text(0, 155,R=249,G=86,B=79,text="> Stack is Full")
 			pygame.display.flip()
@@ -155,7 +155,7 @@ class Render:
 			self.index += 1 # keeps track of items on the screen
 			self.pushed_items.append((value,y_posn)) #keeps track of items on the screen and their coordinates.
 		else:
-			print("Stack is Full") # Some sort of better Error handling.
+			print("[INFO] Stack is Full") # Some sort of better Error handling.
 			render_obj.stack_box(input_list,R=1,G=0)
 			self.display_text(0, 155, "> Stack is Full")
 			pygame.display.flip()
@@ -163,6 +163,7 @@ class Render:
 	def pop_operation(self,render_obj,inp_list):
 		if self.pushed_items:
 			value, coordinates = self.pushed_items.pop()
+			print(f"[INFO] {value} popped by the user")
 
 			for i in range(600-coordinates):
 				render_obj.stack_box(inp_list,R=249/256,G=86/256,B=79/256)
@@ -174,7 +175,7 @@ class Render:
 			
 			self.index -= 1 # since we removed one item from the stack.
 		else:
-			print("Stack is empty") # Some sort of better Error handling.
+			print("[INFO] Stack is empty") # Some sort of better Error handling.
 			render_obj.stack_box(inp_list,R=1,G=0)
 			self.display_text(0, 155,R=249,G=86,B=79,text="> Stack is Empty")
 			pygame.display.flip()
